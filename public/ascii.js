@@ -11,7 +11,7 @@ THREE.AsciiEffect = function ( renderer, charSet, options ) {
 
 	// its fun to create one your own!
 
-	charSet = ( charSet === undefined ) ? ' .:-=+*#%@' : charSet;
+	charSet = ( charSet === undefined ) ? '0101' : charSet;
 
 	if ( ! options ) options = {};
 
@@ -165,22 +165,25 @@ THREE.AsciiEffect = function ( renderer, charSet, options ) {
 
 	}
 
-
 	// can't get a span or div to flow like an img element, but a table works?
 
 
 	// convert img element to ascii
 
-	function asciifyImage( canvasRenderer, oAscii ) {
+	charArray = "01000110011011110111001000100000010001110110111101100100001000000111001101101111001000000110110001101111011101100110010101100100001000000111010001101000011001010010000001110111011011110111001001101100011001000010000001110100011010000110000101110100001000000110100001100101001000000110011101100001011101100110010100100000011010000110100101110011001000000110111101101110011001010010000001100001011011100110010000100000011011110110111001101100011110010010000001010011011011110110111000101100001000000111010001101000011000010111010000100000011101110110100001101111011001010111011001100101011100100010000001100010011001010110110001101001011001010111011001100101011100110010000001101001011011100010000001101000011010010110110100100000011100110110100001100001011011000110110000100000011011100110111101110100001000000111000001100101011100100110100101110011011010000010000001100010011101010111010000100000011010000110000101110110011001010010000001100101011101000110010101110010011011100110000101101100001000000110110001101001011001100110010100101110"
+	var ii = 0;
 
 		var gl = canvasRenderer.context;
 		var oImgData = new Uint8Array(gl.drawingBufferWidth * gl.drawingBufferHeight * 4);
 		gl.readPixels(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight, gl.RGBA, gl.UNSIGNED_BYTE, oImgData);
 
 		// Coloring loop starts now
-		var strChars = [];
 
 		// console.time('rendering');
+
+		var i = ii;
+		ii++;
+		ii %= charSet.length;
 
 		for ( var y = iHeight-1; y > 0; y -- ) {
 
@@ -196,11 +199,11 @@ THREE.AsciiEffect = function ( renderer, charSet, options ) {
 					var iBlue = Math.round(oImgData[ iOffset + 2 ]).toString(16);
 					var iCharIdx = 0;
 
-					var strThisChar = charSet[ iCharIdx ];
+					var strThisChar = charSet[i++ % charSet.length]
 
-					if ( strThisChar === undefined || strThisChar == " " )
+					if ( strThisChar === undefined  )
 					{
-						strThisChar = "&nbsp;";
+						strThisChar = " ";
 					}
 
 					strChars.push("<span style='color:#" + iRed + iGreen + iBlue + ";'>" + strThisChar + "</span>");
