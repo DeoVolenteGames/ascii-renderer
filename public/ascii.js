@@ -27,6 +27,7 @@ THREE.AsciiEffect = function ( renderer, charSet, options ) {
 	var domElement = document.createElement( 'div' );
 	domElement.style.cursor = 'default';
 	domElement.style.height = '100%';
+	domElement.style.width = '100%';
 
 	var oAscii = document.createElement( "table" );
 	domElement.appendChild( oAscii );
