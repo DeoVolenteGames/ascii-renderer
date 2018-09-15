@@ -91,6 +91,7 @@ THREE.AsciiEffect = function ( renderer, charSet, options ) {
 		oStyle.lineHeight = fLineHeight + "px";
 		oStyle.textAlign = "left";
 		oStyle.textDecoration = "none";
+		oStyle.fontWeight = "bold";
 
 	}
 
@@ -184,8 +185,8 @@ THREE.AsciiEffect = function ( renderer, charSet, options ) {
 		// console.time('rendering');
 
 		var i = ii;
-		ii += 8;
-		ii %= charSet.length;
+		// ii += 8;
+		// ii %= charSet.length;
 
 		for ( var y = iHeight-1; y > 0; y -- ) {
 
@@ -194,7 +195,7 @@ THREE.AsciiEffect = function ( renderer, charSet, options ) {
 				var iOffset = ( y * iWidth + x ) * 4;
 				var iAlpha = oImgData[ iOffset + 3 ];
 
-				if (iAlpha > 0)
+				if (iAlpha > 0 && oImgData[ iOffset ] + oImgData[ iOffset + 1 ] + oImgData[ iOffset + 2 ] < 80)
 				{
 					var iRed = Math.round(oImgData[ iOffset ]).toString(16);
 					var iGreen = Math.round(oImgData[ iOffset + 1 ]).toString(16);
