@@ -172,16 +172,12 @@ THREE.AsciiEffect = function ( renderer, charSet, options ) {
 
 	function asciifyImage( canvasRenderer, oAscii ) {
 
-		// oCtx.clearRect( 0, 0, iWidth, iHeight );
-		// oCtx.drawImage( canvasRenderer.domElement, 0, 0, iWidth, iHeight );
-		// var oImgData = oCtx.getImageData( 0, 0, iWidth, iHeight ).data;
-
 		var gl = canvasRenderer.context;
 		var oImgData = new Uint8Array(gl.drawingBufferWidth * gl.drawingBufferHeight * 4);
 		gl.readPixels(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight, gl.RGBA, gl.UNSIGNED_BYTE, oImgData);
 
 		// Coloring loop starts now
-		var strChars = "";
+		var strChars = [];
 
 		// console.time('rendering');
 
@@ -194,64 +190,34 @@ THREE.AsciiEffect = function ( renderer, charSet, options ) {
 
 				if (iAlpha > 0)
 				{
-					var iRed = oImgData[ iOffset ];
-					var iGreen = oImgData[ iOffset + 1 ];
-					var iBlue = oImgData[ iOffset + 2 ];
+					var iRed = Math.round(oImgData[ iOffset ]).toString(16);
+					var iGreen = Math.round(oImgData[ iOffset + 1 ]).toString(16);
+					var iBlue = Math.round(oImgData[ iOffset + 2 ]).toString(16);
 					var iCharIdx = 0;
-
-					// var fBrightness;
-					// fBrightness = ( 0.3 * iRed + 0.59 * iGreen + 0.11 * iBlue ) / 255;
-					// if ( iAlpha == 0 ) {
-					//   // should calculate alpha instead, but quick hack :)
-					//   //fBrightness *= (iAlpha / 255);
-					//   fBrightness = 1;
-					// }
-					// iCharIdx = Math.floor( ( 1 - fBrightness ) * ( aCharList.length - 1 ) );
-					// if ( bInvert ) {
-					//   iCharIdx = aCharList.length - iCharIdx - 1;
-					// }
-
-					// good for debugging
-					//fBrightness = Math.floor(fBrightness * 10);
-					//strThisChar = fBrightness;
 
 					var strThisChar = charSet[ iCharIdx ];
 
 					if ( strThisChar === undefined || strThisChar == " " )
+					{
 						strThisChar = "&nbsp;";
-
-					if ( bColor ) {
-
-						strChars += "<span style='"
-							+ "color:rgb(" + iRed + "," + iGreen + "," + iBlue + ");"
-							// + ( bBlock ? "background-color:rgb(" + iRed + "," + iGreen + "," + iBlue + ");" : "" )
-							// + ( bAlpha ? "opacity:" + ( iAlpha / 255 ) + ";" : "" )
-							+ "'>" + strThisChar + "</span>";
-
-					} else {
-
-						strChars += strThisChar;
-
 					}
+
+					strChars.push("<span style='color:#" + iRed + iGreen + iBlue + ";'>" + strThisChar + "</span>");
 				}
 				else
 				{
-					strChars += " ";
+					strChars.push(" ");
 				}
 
 			}
-			strChars += "<br/>";
+			strChars.push("<br/>");
 
 		}
 
-		oAscii.innerHTML = "<tr><td>" + strChars + "</td></tr>";
+		oAscii.innerHTML = "<tr><td>" + strChars.join("") + "</td></tr>";
 
 		// console.timeEnd('rendering');
 
 		// return oAscii;
-
 	}
-
-	// end modified asciifyImage block
-
 };
