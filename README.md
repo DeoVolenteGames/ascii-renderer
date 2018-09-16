@@ -1,8 +1,10 @@
 # ASCII Renderer
 
-Renders a THREE.js renderer with a mask on top created from an SVG.
+Renders a [THREE.js] renderer with a mask on top created from an SVG.
 
-By using an SVG that doesn't update at runtime frame rate is drastically improved over alternative methods such as [the ascii effect example](https://threejs.org/examples/?q=ascii#canvas_ascii_effect). The limitation is that the text or the viewport size can't change often.
+By using an SVG that doesn't update at runtime frame rate is drastically improved over alternative methods such as [the ascii effect example][ascii-effect-eg]. The limitation is that the text or the viewport size can't change often.
+
+Grab `ascii-renderer.js` and set it up according to the example `index.html`.
 
 ## TODO: list
 
@@ -12,3 +14,6 @@ By using an SVG that doesn't update at runtime frame rate is drastically improve
 1. Set up [pages](https://pages.github.com/#vanilla-step-1).
 1. Add minification.
 1. Check out Firefox orbitControls bug.
+
+[three.js]: https://github.com/mrdoob/three.js
+[ascii-effect-eg]: https://threejs.org/examples/?q=ascii#canvas_ascii_effect
