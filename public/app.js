@@ -2,6 +2,7 @@ var container, stats;
 
 var camera, controls, scene, renderer;
 var effect;
+var resolution;
 
 var sphere, plane;
 
@@ -44,20 +45,10 @@ function init() {
 
   renderer = new THREE.WebGLRenderer( { alpha: true } );
 
-  var options = {
-    resolution: 12,
-    color: true,
-    // block: true
-  }
+  resolution = 12;
 
   var str = '01000110011011110111001000100000010001110110111101100100001000000111001101101111001000000110110001101111011101100110010101100100001000000111010001101000011001010010000001110111011011110111001001101100011001000010000001110100011010000110000101110100001000000110100001100101001000000110011101100001011101100110010100100000011010000110100101110011001000000110111101101110011001010010000001100001011011100110010000100000011011110110111001101100011110010010000001010011011011110110111000101100001000000111010001101000011000010111010000100000011101110110100001101111011001010111011001100101011100100010000001100010011001010110110001101001011001010111011001100101011100110010000001101001011011100010000001101000011010010110110100100000011100110110100001100001011011000110110000100000011011100110111101110100001000000111000001100101011100100110100101110011011010000010000001100010011101010111010000100000011010000110000101110110011001010010000001100101011101000110010101110010011011100110000101101100001000000110110001101001011001100110010100100000';
-  effect = new THREE.AsciiEffect( renderer, str, options );
-  effect.setSize( width, height );
-  // container.appendChild( effect.domElement );
 
-  // Test renderer
-  // renderer.domElement.style.width = '300px';
-  // renderer.domElement.style.height = '300px';
   container.appendChild( renderer.domElement );
   console.log(renderer.domElement);
 
@@ -68,40 +59,40 @@ function init() {
   // container.appendChild( stats.domElement );
   document.body.appendChild( stats.domElement );
 
-  //
-
   window.addEventListener( 'resize', onWindowResize, false );
   onWindowResize();
 }
 
+
 function onWindowResize() {
 
-  camera.aspect = container.clientWidth / container.clientHeight;
+  var width = container.clientWidth;
+  var height = container.clientHeight;
+
+  camera.aspect = width / height;
   camera.updateProjectionMatrix();
 
-  renderer.setSize( container.clientWidth, container.clientHeight );
-  effect.setSize( container.clientWidth, container.clientHeight );
+  var iWidth = Math.round( width / resolution / 0.5 );
+  var iHeight = Math.round( height / resolution );
+
+  renderer.setSize( iWidth, iHeight );
+  renderer.domElement.style.width = width - resolution / 10 + 'px';
+  renderer.domElement.style.height = height + 'px';
 
 }
 
 //
 
 function animate() {
-
   requestAnimationFrame( animate );
 
   stats.begin();
   render();
   stats.end();
-
 }
 
 function render() {
-
   var timer = Date.now() - start;
-
   sphere.rotation.y = timer * 0.0002;
-
-  effect.render( scene, camera );
-
+  renderer.render( scene, camera );
 }

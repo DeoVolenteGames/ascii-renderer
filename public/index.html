@@ -18,33 +18,20 @@
 				width: 500px;
 				position: relative;
 			}
-			.masked {
-				fill: var(--bg-color);
-				opacity: 0.7;
-			}
-			.heading {
-				font-size: 12px;
-				position: absolute;
-			}
 			canvas {
 				image-rendering: -moz-crisp-edges;
 				image-rendering: -webkit-crisp-edges;
 				image-rendering: pixelated;
 				image-rendering: crisp-edges;
-				/* width:90%;
-				height:100%; */
 			}
 		</style>
 	</head>
 	<body>
-		<svg viewBox="0 0 500 500" class="heading">
+		<svg viewBox="0 0 500 500" style="font-size:12px;position:absolute;">
 			<defs>
 				<mask id="mask" x="0" y="0" width="100%" height="100%" >
 					<rect fill="white" x="0" y="0" width="100%" height="100%" />
-					<!-- <text text-anchor="middle" x="0%" y="0%" style="font-size:36px;">Dr. Web</text> -->
-					<text text-anchor="middle"
-						x="0%"
-						dy="-1px">
+					<text text-anchor="middle" x="0%" dy="-1px">
 						<tspan x="50%" y="11.9px" >00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</tspan>
 						<tspan x="50%" dy="11.9px">00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</tspan>
 						<tspan x="50%" dy="11.9px">00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</tspan>
@@ -90,11 +77,10 @@
 					</text>
 				</mask>
 			</defs>
-			<rect class="masked" style="mask:url(#mask);" x="0" y="0" width="100%" height="100%"/>
+			<rect style="mask:url(#mask);fill:var(--bg-color);opacity:0.7;" x="0" y="0" width="100%" height="100%"/>
 		</svg>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/96/three.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.min.js"></script>
-		<script src="ascii.js"></script>
 		<script src="app.js"></script>
 		<script>
 			// app.js config
