@@ -14,12 +14,20 @@
 				margin: 0px;
 				overflow: hidden;
 				height: 100%;
-				/* width: 500px; */
-				position: relative;
+			}
+			.container {
+				height: 500px;
+				width: 500px;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				margin-left: -250px;
+				margin-top: -250px;
 			}
 		</style>
 	</head>
 	<body>
+		<div class="container"></div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/96/three.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.min.js"></script>
 		<script src="orbitControls.js"></script>
@@ -44,11 +52,7 @@
 
 			function init() {
 
-				container = document.createElement( 'div' );
-				container.style.height = '100%';
-				container.style.width = '100%';
-				// container.style.position = 'relative';
-				document.body.appendChild( container );
+				container = document.querySelector('.container');
 
 				var width = container.clientWidth || 2;
 				var height = container.clientWidth || 2;
@@ -87,16 +91,16 @@
 				sphere = new THREE.Mesh( new THREE.SphereBufferGeometry( 200, 20, 10 ), sphereMat );
 				scene.add( sphere );
 
-				controls = new THREE.OrbitControls( camera, renderer.domElement );
+				controls = new THREE.OrbitControls( camera, asciiRenderer.svg );
 				controls.enablePan = false;
 				controls.enableZoom = false;
-				// controls.minPolarAngle = Math.PI/2;
-				// controls.maxPolarAngle = Math.PI/2;
+				controls.minAzimuthAngle = -Math.PI/4;
+				controls.maxAzimuthAngle = Math.PI*3/4;
 				controls.update();
 
 				stats = new Stats();
 				stats.showPanel( 0 );
-				container.appendChild( stats.domElement );
+				document.body.appendChild( stats.domElement );
 
 				window.addEventListener( 'resize', onWindowResize, false );
 				onWindowResize();
