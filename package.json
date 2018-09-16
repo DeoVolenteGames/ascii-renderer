@@ -1,5 +1,5 @@
 {
-  "name": "ascii-animator",
+  "name": "ascii-renderer",
   "version": "0.1.0",
   "description": "ASCII Animation Test",
   "main": "index.js",

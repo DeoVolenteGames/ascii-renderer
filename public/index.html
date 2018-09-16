@@ -6,14 +6,15 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<style>
 			:root {
-				--ascii-bg-color: #eee;
+				--ascii-bg-color: #000;
 			}
+			html { height: 100%; }
 			body {
 				background-color: var(--ascii-bg-color);
 				margin: 0px;
 				overflow: hidden;
-				height: 500px;
-				width: 500px;
+				height: 100%;
+				/* width: 500px; */
 				position: relative;
 			}
 		</style>
@@ -24,15 +25,106 @@
 		<script src="orbitControls.js"></script>
 		<script src="ascii-renderer.js"></script>
 		<script>
-			var charSet = '01000110011011110111001000100000010001110110111101100100001000000111001101101111001000000110110001101111011101100110010101100100001000000111010001101000011001010010000001110111011011110111001001101100011001000010000001110100011010000110000101110100001000000110100001100101001000000110011101100001011101100110010100100000011010000110100101110011001000000110111101101110011001010010000001100001011011100110010000100000011011110110111001101100011110010010000001010011011011110110111000101100001000000111010001101000011000010111010000100000011101110110100001101111011001010111011001100101011100100010000001100010011001010110110001101001011001010111011001100101011100110010000001101001011011100010000001101000011010010110110100100000011100110110100001100001011011000110110000100000011011100110111101110100001000000111000001100101011100100110100101110011011010000010000001100010011101010111010000100000011010000110000101110110011001010010000001100101011101000110010101110010011011100110000101101100001000000110110001101001011001100110010100100000';
+			var container, stats, canvas;
 
-			AsciiRenderer(document.body, 'earth.jpg', {
-				charSet: charSet,
-				controls: true,
-				fontSize: 12,
-				stats: true,
-				// ortho: true,
-			});
+			var camera, controls, scene, renderer;
+
+			var sphere;
+
+			var asciiRenderer;
+
+			var charSet = '01000110011011110111001000100000010001110110111101100100001000000111001101101111001000000110110001101111011101100110010101100100001000000111010001101000011001010010000001110111011011110111001001101100011001000010000001110100011010000110000101110100001000000110100001100101001000000110011101100001011101100110010100100000011010000110100101110011001000000110111101101110011001010010000001100001011011100110010000100000011011110110111001101100011110010010000001010011011011110110111000101100001000000111010001101000011000010111010000100000011101110110100001101111011001010111011001100101011100100010000001100010011001010110110001101001011001010111011001100101011100110010000001101001011011100010000001101000011010010110110100100000011100110110100001100001011011000110110000100000011011100110111101110100001000000111000001100101011100100110100101110011011010000010000001100010011101010111010000100000011010000110000101110110011001010010000001100101011101000110010101110010011011100110000101101100001000000110110001101001011001100110010100100000';
+			var texture = 'earth.jpg';
+			var useOrthoCam = false;
+
+			var start = Date.now();
+
+			init();
+			animate();
+
+			function init() {
+
+				container = document.createElement( 'div' );
+				container.style.height = '100%';
+				container.style.width = '100%';
+				// container.style.position = 'relative';
+				document.body.appendChild( container );
+
+				var width = container.clientWidth || 2;
+				var height = container.clientWidth || 2;
+
+				renderer = new THREE.WebGLRenderer( { alpha: true } );
+				container.appendChild( renderer.domElement );
+
+				asciiRenderer = new AsciiRenderer(renderer, {
+					charSet: charSet,
+					fontSize: 12,
+				});
+
+				if (useOrthoCam) {
+					camera = new THREE.OrthographicCamera( width / -2, width / 2, height / 2, height / -2, 1, 1000 );
+				} else {
+					camera = new THREE.PerspectiveCamera( 25, width / height, 1, 1000 );
+				}
+				camera.position.z = 1000;
+
+				scene = new THREE.Scene();
+
+				var sunlight = new THREE.DirectionalLight( 0xffffff, 1.5 );
+				sunlight.position.set( 1, 0, 1 );
+				scene.add( sunlight );
+
+				var sphereTex = new THREE.TextureLoader().load(texture);
+				sphereTex.magFilter = THREE.NearestFilter;
+				sphereTex.minFilter = THREE.NearestFilter;
+				var sphereMat = new THREE.MeshToonMaterial({
+					map: sphereTex,
+					color: 0xffffff,
+					shininess: 0,
+					reflectivity: 0,
+				});
+
+				sphere = new THREE.Mesh( new THREE.SphereBufferGeometry( 200, 20, 10 ), sphereMat );
+				scene.add( sphere );
+
+				controls = new THREE.OrbitControls( camera, renderer.domElement );
+				controls.enablePan = false;
+				controls.enableZoom = false;
+				// controls.minPolarAngle = Math.PI/2;
+				// controls.maxPolarAngle = Math.PI/2;
+				controls.update();
+
+				stats = new Stats();
+				stats.showPanel( 0 );
+				container.appendChild( stats.domElement );
+
+				window.addEventListener( 'resize', onWindowResize, false );
+				onWindowResize();
+			}
+
+			function onWindowResize() {
+				var width = container.clientWidth;
+				var height = container.clientHeight;
+
+				camera.aspect = width / height;
+				camera.updateProjectionMatrix();
+
+				asciiRenderer.setSize( width, height );
+			}
+
+			function animate() {
+				requestAnimationFrame( animate );
+
+				stats.begin();
+				render();
+				stats.end();
+			}
+
+			function render() {
+				var timer = Date.now() - start;
+				sphere.rotation.y = timer * 0.0002;
+				renderer.render( scene, camera );
+			}
 		</script>
 	</body>
 </html>
