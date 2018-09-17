@@ -1,10 +1,15 @@
-/*
- * @author DeoVolenteGames | https://github.com/DeoVolenteGames
- *
- * Creates an SVG element as a mask and correctly sizes canvas to render behind it.
- *
+/**
+ * Creates an SVG element as a mask and correctly sizes and positions a canvas
+ * to render behind it.
+ * @author DeoVolenteGames
+ * @constructor
+ * @param {THREE.WebGLRenderer} renderer Three.js renderer that is already
+ * attached to a DOM element.
+ * @param {any} options Custom options
+ * - charSet - String of characters to cycle through.
+ * - fontSize - Font size in pixels (recommend not changing for now).
+ * - opacity - Opacity from 0 to 1.
  */
-
 AsciiRenderer = function(renderer, options) {
 
   if ( ! options ) options = {};
@@ -54,8 +59,8 @@ AsciiRenderer = function(renderer, options) {
 
   this.setSize = function(width, height) {
 
-    var iWidth = Math.round( width / fontSize / 0.5 );
-    var iHeight = Math.round( height / fontSize );
+    var iWidth = Math.round(width / fontSize / 0.5);
+    var iHeight = Math.round(height / fontSize);
 
     // TODO: calculate remainder of width to resize by
     renderer.setSize( iWidth, iHeight );
@@ -69,8 +74,8 @@ AsciiRenderer = function(renderer, options) {
     var asciiHeight = Math.ceil(height / fontSize);
 
     strArray.push(`<tspan x="50%" y="${fontSize*0.99}px">`);
-    for ( var y = 0; y < asciiHeight; y++ ) {
-      for ( var x = 0; x < asciiWidth; x++ ) {
+    for (var y = 0; y < asciiHeight; y++) {
+      for (var x = 0; x < asciiWidth; x++) {
         strArray.push(charSet[i++ % charSet.length]);
       }
       strArray.push(`</tspan><tspan x="50%" dy="${fontSize*0.99}px">`);

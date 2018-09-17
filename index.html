@@ -103,26 +103,28 @@
 				var width = container.clientWidth || 2;
 				var height = container.clientWidth || 2;
 
-				renderer = new THREE.WebGLRenderer( { alpha: true } );
-				container.appendChild( renderer.domElement );
+				renderer = new THREE.WebGLRenderer({alpha: true});
+
+				// This step is important, the renderer must have a parent
+				container.appendChild(renderer.domElement);
 
 				asciiRenderer = new AsciiRenderer(renderer, {
 					charSet: charSet,
-					fontSize: 12,
+					fontSize: 12, // please don't change this
 					opacity: 0.7,
 				});
 
 				if (useOrthoCam) {
-					camera = new THREE.OrthographicCamera( width / -2, width / 2, height / 2, height / -2, 1, 1000 );
+					camera = new THREE.OrthographicCamera(width / -2, width / 2, height / 2, height / -2, 1, 1000);
 				} else {
-					camera = new THREE.PerspectiveCamera( 25, width / height, 1, 1000 );
+					camera = new THREE.PerspectiveCamera(25, width / height, 1, 1000);
 				}
 				camera.position.z = 1000;
 
 				scene = new THREE.Scene();
 
-				var sunlight = new THREE.DirectionalLight( 0xffffff, 1.5 );
-				sunlight.position.set( 1, 0, 1 );
+				var sunlight = new THREE.DirectionalLight(0xffffff, 1.5);
+				sunlight.position.set(1, 0, 1);
 				scene.add( sunlight );
 
 				var sphereTex = new THREE.TextureLoader().load(texture);
@@ -135,10 +137,10 @@
 					reflectivity: 0,
 				});
 
-				sphere = new THREE.Mesh( new THREE.SphereBufferGeometry( 200, 20, 10 ), sphereMat );
-				scene.add( sphere );
+				sphere = new THREE.Mesh(new THREE.SphereBufferGeometry(200, 20, 10), sphereMat);
+				scene.add(sphere);
 
-				controls = new THREE.OrbitControls( camera, asciiRenderer.svg );
+				controls = new THREE.OrbitControls(camera, asciiRenderer.svg);
 				controls.enablePan = false;
 				controls.enableZoom = false;
 				controls.minAzimuthAngle = -Math.PI/4;
@@ -149,10 +151,10 @@
 				controls.update();
 
 				stats = new Stats();
-				stats.showPanel( 0 );
-				document.body.appendChild( stats.domElement );
+				stats.showPanel(0);
+				document.body.appendChild(stats.domElement);
 
-				window.addEventListener( 'resize', onWindowResize, false );
+				window.addEventListener('resize', onWindowResize, false);
 				onWindowResize();
 			}
 
@@ -163,11 +165,11 @@
 				camera.aspect = width / height;
 				camera.updateProjectionMatrix();
 
-				asciiRenderer.setSize( width, height );
+				asciiRenderer.setSize(width, height);
 			}
 
 			function animate() {
-				requestAnimationFrame( animate );
+				requestAnimationFrame(animate);
 
 				stats.begin();
 				render();
@@ -178,7 +180,7 @@
 				var timer = Date.now() - start;
 				sphere.rotation.y = timer * 0.0002;
 				controls.update();
-				renderer.render( scene, camera );
+				renderer.render(scene, camera);
 			}
 		</script>
 	</body>
