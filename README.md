@@ -4,7 +4,7 @@
 
 [![Earth demo](demo.png?raw=true)][ascii-demo]
 
-Simulates an ASCII art style with a [three.js] renderer and an SVG mask.
+Simulates an ASCII art style using a [three.js] renderer and an SVG mask.
 
 By using a semi transparent SVG mask that doesn't update at runtime frame rate
 is drastically improved over alternative methods such as [the ascii effect
