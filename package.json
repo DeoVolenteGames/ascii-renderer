@@ -5,7 +5,8 @@
   "main": "ascii-renderer.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "http-server ."
+    "start": "http-server .",
+    "build": "uglifyjs ascii-renderer.js -o ascii-renderer.min.js -c -m"
   },
   "keywords": [
     "Three",
@@ -13,7 +14,8 @@
   ],
   "author": "DeoVolenteGames",
   "license": "MIT",
-  "dependencies": {
-    "http-server": "^0.11.1"
+  "devDependencies": {
+    "http-server": "^0.11.1",
+    "uglify-es": "^3.3.9"
   }
 }
