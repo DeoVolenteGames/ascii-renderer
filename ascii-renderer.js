@@ -10,6 +10,7 @@ AsciiRenderer = function(renderer, options) {
   if ( ! options ) options = {};
   var charSet = !options[ 'charSet' ] ? '01' : options[ 'charSet' ];
   var fontSize = !options[ 'fontSize' ] ? 12 : options[ 'fontSize' ];
+  var opacity = !options[ 'opacity' ] ? 1 : options[ 'opacity' ];
 
   var link = document.createElement('link');
   link.setAttribute('rel', 'stylesheet');
@@ -85,7 +86,7 @@ AsciiRenderer = function(renderer, options) {
           `</text>
         </mask>
       </defs>
-      <rect style="mask:url(#ascii-mask);fill:var(--ascii-bg-color,#000);opacity:0.7;"
+      <rect style="mask:url(#ascii-mask);fill:var(--ascii-bg-color,#000);opacity:${opacity};"
             x="0" y="0" width="100%" height="100%"/></rect>`;
   }
 
