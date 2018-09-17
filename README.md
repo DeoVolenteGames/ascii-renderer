@@ -2,14 +2,15 @@
 
 [*View the demo here*][ascii-demo]
 
-[![Earth demo](demo.png)][ascii-demo]
+[![Earth demo](demo.png?raw=true)][ascii-demo]
 
-Renders a [THREE.js] renderer with a mask on top created from an SVG.
+Simulates an ASCII art style with a [three.js] renderer and an SVG mask.
 
-By using an SVG that doesn't update at runtime frame rate is drastically
-improved over alternative methods such as [the ascii effect
-example][ascii-effect-eg] (which this was originally inspired by). The
-limitation is that the text or the viewport size can't change often.
+By using a semi transparent SVG mask that doesn't update at runtime frame rate
+is drastically improved over alternative methods such as [the ascii effect
+example][ascii-effect-eg] (which was the original inspiration for this project).
+The limitation of this method is that updating the text or the viewport size is
+an expensive operation so they can't change often.
 
 ## How to use
 
@@ -29,7 +30,9 @@ var asciiRenderer = new AsciiRenderer(renderer, {
 
 ## Development
 
-You can set up a dev server with `npm run start` and minify with `npm run start`.
+Use `npm install` to set up dependencies. You can start a dev server with
+`npm run start` and minify with `npm run start`. If you use [VS Code][vs-code]
+you can also use the shortcut `ctrl+shift+B` to start the dev server.
 
 ## TODO: list
 
@@ -41,3 +44,4 @@ You can set up a dev server with `npm run start` and minify with `npm run start`
 [ascii-demo]: https://deovolentegames.github.io/ascii-renderer/
 [three.js]: https://github.com/mrdoob/three.js
 [ascii-effect-eg]: https://threejs.org/examples/?q=ascii#canvas_ascii_effect
+[vs-code]: https://code.visualstudio.com/
