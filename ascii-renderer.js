@@ -6,7 +6,8 @@
  * @param {THREE.WebGLRenderer} renderer Three.js renderer that is already
  * attached to a DOM element.
  * @param {any} options Custom options
- * - charSet - String of characters to cycle through.
+ * - charSet - String of characters to cycle through. All white space characters
+ *   except for actual spaces are ignored.
  * - fontSize - Font size in pixels (recommend not changing for now).
  * - opacity - Opacity from 0 to 1.
  */
@@ -16,6 +17,8 @@ AsciiRenderer = function(renderer, options) {
   var charSet = !options[ 'charSet' ] ? '01' : options[ 'charSet' ];
   var fontSize = !options[ 'fontSize' ] ? 12 : options[ 'fontSize' ];
   var opacity = !options[ 'opacity' ] ? 1 : options[ 'opacity' ];
+
+  charSet = charSet.replace(/[^\S ]/g, '');
 
   var link = document.createElement('link');
   link.setAttribute('rel', 'stylesheet');
@@ -69,6 +72,7 @@ AsciiRenderer = function(renderer, options) {
     canvas.style.position = 'absolute';
 
     var i = 0;
+    var char;
     var strArray = [];
     var asciiWidth = Math.floor(width / fontSize * 2);
     var asciiHeight = Math.ceil(height / fontSize);
@@ -76,7 +80,8 @@ AsciiRenderer = function(renderer, options) {
     strArray.push(`<tspan x="50%" y="${fontSize*0.99}px">`);
     for (var y = 0; y < asciiHeight; y++) {
       for (var x = 0; x < asciiWidth; x++) {
-        strArray.push(charSet[i++ % charSet.length]);
+        char = charSet[i++ % charSet.length];
+        strArray.push(char !== ' ' ? char : '&nbsp');
       }
       strArray.push(`</tspan><tspan x="50%" dy="${fontSize*0.99}px">`);
     }
