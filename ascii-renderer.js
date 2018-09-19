@@ -8,6 +8,7 @@
  * @param {any} options Custom options
  * - charSet - String of characters to cycle through. All white space characters
  *   except for actual spaces are ignored.
+ * - color - CSS color, set by default to --ascii-bg-color or black.
  * - fontSize - Font size in pixels (recommend not changing for now).
  * - opacity - Opacity from 0 to 1.
  */
@@ -15,6 +16,7 @@ AsciiRenderer = function(renderer, options) {
 
   if ( ! options ) options = {};
   var charSet = !options[ 'charSet' ] ? '01' : options[ 'charSet' ];
+  var color = !options[ 'color' ] ? 'var(--ascii-bg-color,black)' : options[ 'color' ];
   var fontSize = !options[ 'fontSize' ] ? 12 : options[ 'fontSize' ];
   var opacity = !options[ 'opacity' ] ? 1 : options[ 'opacity' ];
 
@@ -96,7 +98,7 @@ AsciiRenderer = function(renderer, options) {
           `</text>
         </mask>
       </defs>
-      <rect style="mask:url(#ascii-mask);fill:var(--ascii-bg-color,#000);opacity:${opacity};"
+      <rect style="mask:url(#ascii-mask);fill:${color};opacity:${opacity};"
             x="0" y="0" width="100%" height="100%"/></rect>`;
   }
 
