@@ -36,6 +36,10 @@ AsciiRenderer = function(renderer, options) {
     image-rendering: -webkit-crisp-edges;
     image-rendering: pixelated;
     image-rendering: crisp-edges;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
   }`;
   if(style.styleSheet){
       style.styleSheet.cssText=styleStr;
@@ -64,20 +68,17 @@ AsciiRenderer = function(renderer, options) {
 
   this.setSize = function(width, height) {
 
-    var iWidth = Math.round(width / fontSize / 0.5);
-    var iHeight = Math.round(height / fontSize);
+    var asciiWidth = Math.floor(width / fontSize * 2);
+    var asciiHeight = Math.ceil(height / fontSize);
 
     // TODO: calculate remainder of width to resize by
-    renderer.setSize( iWidth, iHeight );
-    canvas.style.width = width - 1 + 'px';
-    canvas.style.height = height + 'px';
-    canvas.style.position = 'absolute';
+    renderer.setSize( asciiWidth, asciiHeight );
+    canvas.style.width = asciiWidth * fontSize * 0.5 + 'px';
+    canvas.style.height = asciiHeight * fontSize + 'px';
 
     var i = 0;
     var char;
     var strArray = [];
-    var asciiWidth = Math.floor(width / fontSize * 2);
-    var asciiHeight = Math.ceil(height / fontSize);
 
     strArray.push(`<tspan x="50%" y="${fontSize*0.99}px">`);
     for (var y = 0; y < asciiHeight; y++) {
@@ -85,7 +86,7 @@ AsciiRenderer = function(renderer, options) {
         char = charSet[i++ % charSet.length];
         strArray.push(char !== ' ' ? char : '&nbsp');
       }
-      strArray.push(`</tspan><tspan x="50%" dy="${fontSize*0.99}px">`);
+      strArray.push(`</tspan><tspan x="50%" dy="${fontSize}px">`);
     }
     strArray.push('</tspan>');
 
@@ -94,7 +95,7 @@ AsciiRenderer = function(renderer, options) {
       <defs>
         <mask id="${id}" x="0" y="0" width="100%" height="100%" >
           <rect fill="white" x="0" y="0" width="100%" height="100%"></rect>
-          <text text-anchor="middle" x="0%" dy="${-fontSize/12}px">` +
+          <text text-anchor="middle" x="0%" dy="${-fontSize/10}px">` +
           strArray.join('') +
           `</text>
         </mask>

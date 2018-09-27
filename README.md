@@ -37,8 +37,7 @@ you can also use the shortcut `ctrl+shift+B` to start the dev server.
 ## TODO: list
 
 1. Toon lighting has issues when viewed from behind. Try a custom lighting model.
-1. Fix font size rendering so that any combination of font and canvas size can be used.
-1. Add font ratio detection so that any monospace font can be used.
+1. Test font ratio detection so that any monospace font can be used.
 1. Remove unnecessary `<tspan>` at the end of the text mask.
 
 [ascii-demo]: https://deovolentegames.github.io/ascii-renderer/

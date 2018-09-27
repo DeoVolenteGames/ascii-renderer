@@ -17,13 +17,10 @@
 				height: 100%;
 			}
 			.container {
-				height: 500px;
-				width: 500px;
+				height: calc(100% - 200px);
+				width: 100%;
 				position: fixed;
-				top: 50%;
-				left: 50%;
-				margin-left: -250px;
-				margin-top: -250px;
+				bottom: 20px;
 			}
 			.title {
 				text-align: center;
@@ -111,7 +108,7 @@
 
 				asciiRenderer = new AsciiRenderer(renderer, {
 					charSet: charSet,
-					fontSize: 12, // please don't change this
+					fontSize: 12,
 					opacity: 0.7,
 				});
 
