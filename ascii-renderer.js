@@ -89,16 +89,17 @@ AsciiRenderer = function(renderer, options) {
     }
     strArray.push('</tspan>');
 
+    var id = 'ascii-mask-' + Math.floor(Math.random() * 9999);
     svg.innerHTML = `
       <defs>
-        <mask id="ascii-mask" x="0" y="0" width="100%" height="100%" >
+        <mask id="${id}" x="0" y="0" width="100%" height="100%" >
           <rect fill="white" x="0" y="0" width="100%" height="100%"></rect>
           <text text-anchor="middle" x="0%" dy="${-fontSize/12}px">` +
           strArray.join('') +
           `</text>
         </mask>
       </defs>
-      <rect style="mask:url(#ascii-mask);fill:${color};opacity:${opacity};"
+      <rect style="mask:url(#${id});fill:${color};opacity:${opacity};"
             x="0" y="0" width="100%" height="100%"/></rect>`;
   }
 
