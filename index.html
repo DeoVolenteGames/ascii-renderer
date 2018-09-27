@@ -141,7 +141,7 @@
 				sphere = new THREE.Mesh(new THREE.SphereBufferGeometry(200, 20, 10), sphereMat);
 				scene.add(sphere);
 
-				controls = new THREE.OrbitControls(camera, asciiRenderer.svg);
+				controls = new THREE.OrbitControls(camera, container);
 				controls.enablePan = false;
 				controls.enableZoom = false;
 				controls.minAzimuthAngle = -Math.PI/4;
